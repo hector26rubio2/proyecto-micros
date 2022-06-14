@@ -5,6 +5,7 @@ import { Usuario } from '../usuario/Usuario';
 
 function Tabla() {
     const [activeIndex, setActiveIndex] = useState(0);
+    
   return (
     <TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
     <TabPanel header="Usuarios">
