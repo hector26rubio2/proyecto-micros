@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { getCursos } from "../../service/UsuarioService";
+import { getCarros } from "../../service/UsuarioService";
 import { Button } from "primereact/button";
 import { Rating } from "primereact/rating";
 import "./Usuario.css";
@@ -12,7 +12,7 @@ export const Usuario = () => {
 
   async function obtenerCursos() {
     try {
-      var curso = await getCursos();
+      var curso = await getCarros();
       //console.log(curso);
     } catch (error) {
 
