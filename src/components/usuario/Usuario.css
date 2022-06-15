@@ -10,12 +10,12 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
-.product-badge.status-instock {
+.product-badge.status-aprovado {
     background: #c8e6c9;
     color: #256029;
 }
 
-.product-badge.status-outofstock {
+.product-badge.status-denegado {
     background: #ffcdd2;
     color: #c63737;
 }

@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { getCarros } from "../../service/UsuarioService";
-import { Button } from "primereact/button";
-import { Rating } from "primereact/rating";
+import { getUSuario } from "../../service/UsuarioService";
+
+import { Fieldset } from 'primereact/fieldset';
+
+
 import "./Usuario.css";
 
 export const Usuario = () => {
-  const [products, setProducts] = useState([]);
+  const [Usuarios,setUsuario] = useState([]);
   //const productService = new ProductService();
 
   async function obtenerCursos() {
     try {
-      var curso = await getCarros();
-      //console.log(curso);
+      var usuarios = Object.values( await getUSuario());
+      
+      setUsuario(usuarios)
     } catch (error) {
 
       console.log(error);
@@ -30,73 +33,80 @@ export const Usuario = () => {
     });
   };
 
-  const imageBodyTemplate = (rowData) => {
+  const vehiculoTemplate = (rowData) => {
     return (
       <img
-        src={`images/product/${rowData.image}`}
+        src={`images/product/${rowData.vehiculo}`}
         onError={(e) =>
           (e.target.src =
-            "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
+            "https://firebasestorage.googleapis.com/v0/b/proyecto-81877.appspot.com/o/data%2Fphoto.jpg?alt=media&token=2964b532-e1cc-4982-8144-bfee83c67a05 ")
         }
-        alt={rowData.image}
+        alt={rowData.vehiculo}
         className="product-image"
       />
     );
   };
 
-  const priceBodyTemplate = (rowData) => {
-    return formatCurrency(rowData.price);
+  const horaBodyTemplate =(rowData) =>{
+    return formatCurrency(rowData.hora);
+  }
+  const placaBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.placa);
   };
 
-  const ratingBodyTemplate = (rowData) => {
-    return <Rating value={rowData.rating} readOnly cancel={false} />;
+  const estadoBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.estado);
   };
 
+ 
   const statusBodyTemplate = (rowData) => {
+    var autorizacion = ""
+    if (rowData.autorizacion)
+    {
+      autorizacion = "Aprovado"
+    }else{
+      autorizacion = "Denegado"
+    }
     return (
       <span
-        className={`product-badge status-${rowData.inventoryStatus.toLowerCase()}`}
+        className={`product-badge status-${autorizacion.toLowerCase()}`}
       >
-        {rowData.inventoryStatus}
+        {autorizacion}
       </span>
     );
   };
 
-  const header = (
-    <div className="table-header">
-      Products
-      <Button icon="pi pi-refresh" />
-    </div>
-  );
-  const footer = `In total there are ${
-    products ? products.length : 0
-  } products.`;
-
+ 
   return (
     <div className="datatable-templating-demo">
+
+      <Fieldset legend="Usuarios" toggleable > 
       <div className="card">
+     
+     
         <DataTable
-          value={products}
-          header={header}
-          footer={footer}
+          value={Usuarios}
+        
           responsiveLayout="scroll"
         >
-          <Column field="name" header="Name"></Column>
-          <Column header="Image" body={imageBodyTemplate}></Column>
+          <Column field="propietario" header="Propietario"></Column>
+          <Column header="Vehiculo" body={vehiculoTemplate}></Column>
           <Column
-            field="price"
-            header="Price"
-            body={priceBodyTemplate}
+            field="placa"
+            header="Placa"
+            body={placaBodyTemplate}
           ></Column>
-          <Column field="category" header="Category"></Column>
+          <Column field="hora" header="Hora"
+          body={horaBodyTemplate}></Column>
           <Column
-            field="rating"
-            header="Reviews"
-            body={ratingBodyTemplate}
+            field="estado"
+            header="Estado"
+            body={estadoBodyTemplate}
           ></Column>
-          <Column header="Status" body={statusBodyTemplate}></Column>
+          <Column header="Autorización" body={statusBodyTemplate}></Column>
         </DataTable>
       </div>
+      </Fieldset>
     </div>
   );
 };

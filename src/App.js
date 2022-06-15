@@ -6,8 +6,8 @@ import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import PrimeReact from 'primereact/api';
 
-import Tabla from "./components/menu/Tabla"
 import "firebase/auth";
+import { Usuario } from './components/usuario/Usuario';
 
 function App() {
  
@@ -28,7 +28,7 @@ PrimeReact.cssTransition = false;
 
   return (
     <div className="App">
-     <Tabla></Tabla>
+     <Usuario></Usuario>
 
       </div>
 
